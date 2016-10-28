@@ -14,7 +14,7 @@ SRC_URI = "git://${OPENXT_GIT_MIRROR}/ocaml.git;protocol=${OPENXT_GIT_PROTOCOL};
            file://finaliser-on-weak-array-gives-dangling-pointers.patch \
 "
 
-inherit xenclient
+inherit ocaml-empty-rm-work
 #inherit native
 inherit cross
 
