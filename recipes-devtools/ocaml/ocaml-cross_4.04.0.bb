@@ -14,6 +14,8 @@ inherit xenclient
 #inherit native
 inherit cross
 
+DEPENDS = "virtual/${TARGET_PREFIX}gcc libgcc"
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/ocaml-cross:"
 
 S = "${WORKDIR}/ocaml-${PV}"
