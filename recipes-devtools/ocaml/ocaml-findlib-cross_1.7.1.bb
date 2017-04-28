@@ -7,10 +7,9 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=a30ace4f9508a47d2c25c45c48af6492"
 
 inherit cross
 
-PR = "r0"
-
 SRC_URI = "http://download.camlcity.org/download/findlib-1.7.1.tar.gz \
            file://findlib_remote_utime.patch;patch=1 \
+           file://ocamlfind-wrapper.sh \
 "
 
 S = "${WORKDIR}/findlib-${PV}"
@@ -27,5 +26,7 @@ do_compile() {
 }
 
 do_install() {
-	oe_runmake prefix=${D} install
+    oe_runmake prefix=${D} install
+    mv ${D}${bindir}/ocamlfind ${D}${bindir}/ocamlfind.binary
+    install -m 0755 ${WORKDIR}/ocamlfind-wrapper.sh ${D}${bindir}/ocamlfind
 }
