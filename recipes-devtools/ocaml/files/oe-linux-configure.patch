@@ -1,0 +1,47 @@
+Index: ocaml-4.04.2/configure
+===================================================================
+--- ocaml-4.04.2.orig/configure
++++ ocaml-4.04.2/configure
+@@ -559,6 +559,15 @@ if test "$?" -eq 0; then
+ else
+   # For cross-compilation, runtest always fails: add special handling.
+   case "$target" in
++    i?86-*-linux*) inf "OK, this is a regular 32 bits architecture."
++                   echo "#undef ARCH_SIXTYFOUR" >> m.h
++                   set 4 4 4 2 8
++                   arch64=false;;
++    # Might want to check BITS_PER_LONG for target?
++    x86_64-*-linux*) inf "Wow! A 64 bit architecture!"
++                     echo "#define ARCH_SIXTYFOUR" >> m.h
++                     set 4 8 8 2 8
++                     arch64=true;;
+     i686-*-mingw*) inf "OK, this is a regular 32 bit architecture."
+                    echo "#undef ARCH_SIXTYFOUR" >> m.h
+                    set 4 4 4 2 8
+@@ -604,6 +613,8 @@ case $? in
+   2) err "This architecture seems to be neither big endian nor little" \
+          "endian.\n OCaml won't run on this architecture.";;
+   *) case $target in
++       i?86-*-linux*|x86_64-*-linux*) inf "This is a little-endian architecture."
++                                          echo "#undef ARCH_BIG_ENDIAN" >> m.h;;
+        *-*-mingw*) inf "This is a little-endian architecture."
+                    echo "#undef ARCH_BIG_ENDIAN" >> m.h;;
+        *) wrn "Something went wrong during endianness determination.\n" \
+@@ -639,6 +650,8 @@ case "$target" in
+       1) inf "Doubles must be doubleword-aligned."
+          echo "#define ARCH_ALIGN_DOUBLE" >> m.h;;
+       *) case "$target" in
++           i?86-*-linux*|x86_64-*-linux*) inf "Doubles can be word-aligned."
++                                          echo "#undef ARCH_ALIGN_DOUBLE" >> m.h;;
+            *-*-mingw*) inf "Doubles can be word-aligned."
+                        echo "#undef ARCH_ALIGN_DOUBLE" >> m.h;;
+            *) wrn "Something went wrong during alignment determination for" \
+@@ -661,6 +674,8 @@ case "$target" in
+       inf "64-bit integers must be doubleword-aligned."
+       echo "#define ARCH_ALIGN_INT64" >> m.h
+     fi;;
++  i?86-*-linux*|x86_64-*-linux*) inf "64-bit integers can be word-aligned."
++                                 echo "#undef ARCH_ALIGN_INT64" >> m.h;;
+   *-*-mingw*) true;; # Nothing is in config/m-nt.h so don't add anything.
+   *)
+     sh ./runtest int64align.c
