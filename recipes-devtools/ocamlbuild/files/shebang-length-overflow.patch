@@ -1,0 +1,13 @@
+Index: ocamlbuild-0.10.1/Makefile
+===================================================================
+--- ocamlbuild-0.10.1.orig/Makefile	2017-11-14 19:07:18.046678500 -0500
++++ ocamlbuild-0.10.1/Makefile	2017-11-14 19:08:11.829228626 -0500
+@@ -196,7 +196,7 @@
+ 	cat $^ > man/ocamlbuild.1
+ 
+ man/ocamlbuild.options.1: man/options_man.byte
+-	./man/options_man.byte > man/ocamlbuild.options.1
++	ocamlrun ./man/options_man.byte > man/ocamlbuild.options.1
+ 
+ clean::
+ 	rm -f man/ocamlbuild.options.1
