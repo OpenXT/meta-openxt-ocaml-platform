@@ -27,3 +27,5 @@ DEPENDS_append_class-target = " \
 
 ocamllibdir = "${libdir}/ocaml"
 export ocamllibdir
+
+OPN ?= "${@d.getVar('BPN').replace('ocaml-','')}"
