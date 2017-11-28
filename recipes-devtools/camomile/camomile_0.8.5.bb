@@ -23,25 +23,12 @@ S = "${WORKDIR}/camomile-${PV}"
 
 inherit ocaml findlib
 
-FILES_${PN} = " \
-    ${ocamllibdir}/camomile/*${SOLIBS} \
+FILES_${PN} += " \
     ${datadir}/camomile/charmaps/* \
     ${datadir}/camomile/database/* \
     ${datadir}/camomile/locales/* \
     ${datadir}/camomile/mappings/* \
 "
-FILES_${PN}-dev = " \
-    ${ocamllibdir}/camomile/*${SOLIBSDEV} \
-    ${ocamllibdir}/camomile/*.cm* \
-    ${ocamllibdir}/camomile/META \
-"
-FILES_${PN}-staticdev = " \
-    ${ocamllibdir}/camomile \
-"
-FILES_${PN}-dbg = " \
-    ${ocamllibdir}/camomile/.debug/* \
-"
-
 do_configure() {
     ./configure \
         --prefix=${prefix} \

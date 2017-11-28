@@ -10,15 +10,23 @@ sitelibdir = "${ocamllibdir}/site-lib"
 export sitelibdir
 
 FILES_${PN} = " \
-    ${sitelibdir}/${OPN}/*${SOLIBSDEV} \
+    ${sitelibdir}/*/*${SOLIBSDEV} \
+    ${bindir}/* \
+    ${sbindir}/* \
 "
 FILES_${PN}-dev = " \
-    ${sitelibdir}/${OPN}/*.cm* \
-    ${sitelibdir}/${OPN}/*.mli \
-    ${sitelibdir}/${OPN}/META \
+    ${sitelibdir}/*/*.cm* \
+    ${sitelibdir}/*/*.mli \
+    ${sitelibdir}/*/META \
 "
 FILES_${PN}-staticdev = " \
-    ${sitelibdir}/${OPN}/*.a \
+    ${sitelibdir}/*/*.a \
+"
+FILES_${PN}-dbg = " \
+    ${sitelibdir}/*/.debug \
+    ${bindir}/.debug \
+    ${sbindir}/.debug \
+    /usr/src/debug \
 "
 
 # See http://projects.camlcity.org/projects/dl/findlib-1.4/doc/ref-html/r775.html.

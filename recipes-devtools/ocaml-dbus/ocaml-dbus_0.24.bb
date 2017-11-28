@@ -26,22 +26,6 @@ S = "${WORKDIR}/ocaml_dbus-${PV}"
 
 inherit ocaml findlib pkgconfig
 
-# .so convention is not respected, ocaml-dbus.so
-FILES_${PN} = " \
-    ${ocamllibdir}/dbus/*${SOLIBSDEV} \
-    ${ocamllibdir}/dbus/*${SOLIBS} \
-"
-FILES_${PN}-dev = " \
-    ${ocamllibdir}/dbus/*.cm* \
-    ${ocamllibdir}/dbus/META \
-"
-FILES_${PN}-staticdev = " \
-    ${ocamllibdir}/dbus/*.a \
-"
-FILES_${PN}-dbg = " \
-    ${ocamllibdir}/dbus/.debug/* \
-"
-
 do_compile() {
 # TODO: There has to be a better way than this...
 # ocamlmklib should be able to figure out where the sysroot staging, apparently
@@ -51,8 +35,5 @@ do_compile() {
 }
 
 do_install() {
-    install -d ${D}${ocamllibdir}
-    ocamlfind install -destdir ${D}${ocamllibdir} dbus META dBus.cmxa dBus.cma dBus.cmi dlldbus_stubs.so dBus.a libdbus_stubs.a
+    oe_runmake OCAMLDESTDIR="$(ocamlfind printconf destdir)" install
 }
-
-INSANE_SKIP_${PN} = "ldflags"
