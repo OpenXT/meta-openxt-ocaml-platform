@@ -28,4 +28,8 @@ DEPENDS_append_class-target = " \
 ocamllibdir = "${libdir}/ocaml"
 export ocamllibdir
 
+# cross environment ocaml headers to interface with C sources.
+ocamlincdir = "${STAGING_LIBDIR_NATIVE}/${TARGET_SYS}/ocaml"
+export ocamlincdir
+
 OPN ?= "${@d.getVar('BPN').replace('ocaml-','')}"
