@@ -1,0 +1,15 @@
+Index: ocaml-4.04.2/stdlib/Makefile
+===================================================================
+--- ocaml-4.04.2.orig/stdlib/Makefile
++++ ocaml-4.04.2/stdlib/Makefile
+@@ -54,8 +54,8 @@ camlheaderi target_camlheaderi: \
+   header.c ../config/Makefile
+ 	if $(HASHBANGSCRIPTS); then \
+ 	  for suff in '' d i; do \
+-	    echo '#!$(BINDIR)/ocamlrun'$$suff > camlheader$$suff && \
+-	    echo '#!$(TARGET_BINDIR)/ocamlrun'$$suff >target_camlheader$$suff; \
++	    echo '#!/usr/bin/env ocamlrun'$$suff > camlheader$$suff && \
++	    echo '#!/usr/bin/env ocamlrun'$$suff >target_camlheader$$suff; \
+ 	  done && \
+ 	  echo '#!' | tr -d '\012' > camlheader_ur; \
+ 	else \
