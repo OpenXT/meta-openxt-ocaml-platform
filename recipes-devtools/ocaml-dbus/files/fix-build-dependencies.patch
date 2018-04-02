@@ -1,0 +1,20 @@
+Index: ocaml_dbus-0.24/Makefile
+===================================================================
+--- ocaml_dbus-0.24.orig/Makefile
++++ ocaml_dbus-0.24/Makefile
+@@ -44,13 +44,13 @@ dbus_stubs.a: libdbus_stubs.a
+ libdbus_stubs.a: dbus_stubs.o
+ 	$(OCAMLMKLIB) -o dbus_stubs $(DBUS_LDFLAGS) $+
+ 
+-%.cmo: %.ml
++%.cmo: %.ml %.cmi
+ 	$(OCAMLC) -c -o $@ $<
+ 
+ %.cmi: %.mli
+ 	$(OCAMLC) -c -o $@ $<
+ 
+-%.cmx: %.ml
++%.cmx: %.ml %.cmi
+ 	$(OCAMLOPT) $(OCAMLOPTFLAGS) -c -o $@ $<
+ 
+ %.o: %.c
