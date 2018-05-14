@@ -1,3 +1,3 @@
 require findlib-${PV}.inc
 
-BBCLASSEXSTEND = "native"
+BBCLASSEXTEND = "native"
