@@ -21,10 +21,9 @@ PN = "ocaml-cross-${TARGET_ARCH}"
 COMPATIBLE_HOST = "(i.86|x86_64).*-linux"
 COMPATIBLE_MACHINE = "(-)"
 COMPATIBLE_MACHINE_x86 = "(.*)"
-#COMPATIBLE_MACHINE_x86-64 = "(.*)"
+COMPATIBLE_MACHINE_x86-64 = "(.*)"
 
 # Speed things up since we assume host is of the same architecture.
-# Current OpenXT target are linux 32 bit.
 do_configure_x86() {
     ./configure -no-curses \
                 -no-graph \
@@ -37,6 +36,21 @@ do_configure_x86() {
                 -aspp "${TARGET_PREFIX}gcc -m32 -c -fPIC" \
                 -host ${TARGET_SYS} \
                 -partialld "ld -r -melf_i386" \
+                ${EXTRA_CONF}
+}
+
+do_configure_x86-64() {
+    ./configure -no-curses \
+                -no-graph \
+                -prefix ${prefix} \
+                -bindir ${bindir} \
+                -libdir ${libdir}/ocaml \
+                -mandir ${datadir}/man \
+                -cc "${TARGET_PREFIX}gcc -fPIC --sysroot=${STAGING_DIR_TARGET}" \
+                -as "${TARGET_PREFIX}as" \
+                -aspp "${TARGET_PREFIX}gcc -c -fPIC" \
+                -host ${TARGET_SYS} \
+                -partialld "${TARGET_PREFIX}ld -r" \
                 ${EXTRA_CONF}
 }
 
