@@ -43,7 +43,7 @@ do_configure() {
 # This does not happen using camlp4 byte-code instead of native compiled.
 PARALLEL_MAKE = ""
 do_compile() {
-    oe_runmake
+    oe_runmake OCAMLOPT="ocamlopt"
 }
 
 do_install() {
