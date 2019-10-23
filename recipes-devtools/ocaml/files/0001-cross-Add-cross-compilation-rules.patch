@@ -1,0 +1,78 @@
+From 0ce7d96a184a7b7261497bb466386c3f4211660b Mon Sep 17 00:00:00 2001
+From: Eric Chanudet <chanudete@ainfosec.com>
+Date: Mon, 21 Oct 2019 11:45:54 -0400
+Subject: [PATCH] cross: Add cross-compilation rules.
+
+Use the native compiler to build a cross build environment and
+toolchain.
+This patch is adapted from:
+https://github.com/gerdstolpmann/ocaml/commit/34bfa2efe06d99603d951d1d34240d40762b2c2b
+
+Signed-off-by: Eric Chanudet <chanudete@ainfosec.com>
+---
+ Makefile | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
+
+Index: ocaml-4.04.2/Makefile
+===================================================================
+--- ocaml-4.04.2.orig/Makefile
++++ ocaml-4.04.2/Makefile
+@@ -198,6 +198,42 @@ base.opt:
+ 	$(MAKE) ocamlopt.opt
+ 	$(MAKE) otherlibrariesopt
+ 
++# Cross compilation support.
++cross-all:
++	$(MAKE) cross-boot
++	$(MAKE) all
++
++cross-opt: cross-all
++	$(MAKE) opt
++
++cross-boot:
++	if ! ocamlc; then \
++	  echo "No host compiler found in PATH" >&2; \
++	  exit 1; \
++	fi
++	rm -f boot/*
++	for cmd in ocamlrun ocamlyacc; do \
++	  ln -sf "$$(which $${cmd})" boot/; \
++	done
++	for cmd in ocamlc ocamldep ocamllex; do \
++	  ln -sf "$$(which $${cmd}.byte)" boot/$${cmd}; \
++	done
++	if test -z "$(STAGING_OCAMLLIB)"; then \
++	  hostlib="$$(ocamlc -where)"; \
++	else \
++	  hostlib="$(STAGING_OCAMLLIB)"; \
++	fi && \
++	for file in \
++	  "$${hostlib}/stdlib.cma" \
++	  "$${hostlib}/std_exit.cmo" \
++	  $${hostlib}/*.cmi; do \
++	    ln -sf "$${file}" boot/; \
++	done
++	echo "#! /usr/bin/env ocamlrun" > boot/camlheader
++	rm -f byterun/ocamlrun
++	ln -sf ../boot/ocamlrun byterun/
++
++
+ # Installation
+ 
+ COMPLIBDIR=$(LIBDIR)/compiler-libs
+@@ -225,7 +261,7 @@ install:
+ 	  dllunix$(EXT_DLL) dllgraphics$(EXT_DLL) dllstr$(EXT_DLL)
+ 	cd byterun; $(MAKE) install
+ 	cp ocamlc $(INSTALL_BINDIR)/ocamlc.byte$(EXE)
+-	cp ocaml $(INSTALL_BINDIR)/ocaml$(EXE)
++	cp ocaml $(INSTALL_BINDIR)/ocaml$(EXE) || true # Not for cross comp.
+ 	cd stdlib; $(MAKE) install
+ 	cp lex/ocamllex $(INSTALL_BINDIR)/ocamllex.byte$(EXE)
+ 	cp $(CAMLYACC)$(EXE) $(INSTALL_BINDIR)/ocamlyacc$(EXE)
+@@ -778,5 +814,6 @@ distclean:
+ .PHONY: ocamltoolsopt.opt ocamlyacc opt-core opt opt.opt otherlibraries
+ .PHONY: otherlibrariesopt package-macosx promote promote-cross
+ .PHONY: restore runtime runtimeopt makeruntimeopt world world.opt
++.PHONY: cross-all cross-opt cross-boot
+ 
+ include .depend
