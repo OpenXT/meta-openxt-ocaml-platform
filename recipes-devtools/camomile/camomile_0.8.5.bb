@@ -15,6 +15,7 @@ DEPENDS = " \
 SRC_URI = " \
     http://github.com/yoriyuki/Camomile/releases/download/rel-${PV}/camomile-${PV}.tar.bz2 \
     file://ocaml-camomile-destdir.patch \
+    file://bytecode-ocamlbest.patch \
 "
 SRC_URI[md5sum] = "1e25b6cd4efd26ab38a667db18d83f02"
 SRC_URI[sha256sum] = "85806b051cf059b93676a10a3f66051f7f322cad6e3248172c3e5275f79d7100"
@@ -49,3 +50,5 @@ do_compile() {
 do_install() {
     oe_runmake DESTDIR="${D}" install
 }
+
+INSANE_SKIP_${PN}-dev = "file-rdeps"
