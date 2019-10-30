@@ -2,7 +2,8 @@ DEPENDS_append_class-native = " \
     findlib-native \
 "
 DEPENDS_append_class-target = " \
-    virtual/${TARGET_PREFIX}ocamlfind \
+    findlib-native \
+    virtual/${TARGET_PREFIX}ocamlfind-meta \
 "
 
 # location where ocamlfind install puts the packages.
