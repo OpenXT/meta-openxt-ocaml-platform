@@ -73,6 +73,10 @@ do_compile() {
     oe_runmake OCAMLLIB="${STAGING_LIBDIR_NATIVE}/ocaml" cross-opt
 }
 
+do_install_append() {
+    rm "${D}${bindir}/ocamlrun"
+}
+
 # Ignore how TARGET_ARCH is computed.
 TARGET_ARCH[vardepvalue] = "${TARGET_ARCH}"
 
