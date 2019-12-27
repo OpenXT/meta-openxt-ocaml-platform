@@ -18,6 +18,7 @@ do_configure() {
                 -prefix ${prefix} \
                 -libdir ${libdir}/ocaml \
                 -mandir ${datadir}/man \
+                -fPIC \
                 ${EXTRA_CONF}
 }
 do_configure_append() {
