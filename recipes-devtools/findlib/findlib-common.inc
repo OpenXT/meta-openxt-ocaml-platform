@@ -16,7 +16,8 @@ do_configure() {
     ./configure \
         -bindir ${bindir} \
         -mandir ${datadir}/man \
-        -sitelib ${ocamllibdir}/site-lib
+        -sitelib ${ocamllibdir}/site-lib \
+        -config ${sysconfdir}/findlib.conf
 }
 
 do_compile() {
@@ -26,7 +27,7 @@ do_compile() {
     oe_runmake opt
 }
 
-EXTRA_OEMAKE_append = " prefix='${D}'"
+EXTRA_OEMAKE_append += "prefix='${D}'"
 do_install() {
     oe_runmake install
 }
