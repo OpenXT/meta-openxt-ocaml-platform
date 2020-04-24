@@ -7,8 +7,9 @@ PROVIDES = " \
 PN = "findlib-cross-${TARGET_ARCH}"
 
 do_install_append() {
-    rm -r ${D}${bindir}
-    rm -r ${D}${mandir}
+    rm -rf ${D}${bindir}
+    rm -rf ${D}${mandir}
+    rm -rf ${D}${sysconfdir}
 }
 
 # Ignore how TARGET_ARCH is computed.
