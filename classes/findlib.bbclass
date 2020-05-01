@@ -42,6 +42,7 @@ do_local_findlib_conf() {
     cat << EOF > ${OCAMLFIND_CONF}
 destdir="${D}${sitelibdir}"
 path="${OCAMLLIB}/site-lib:${STAGING_LIBDIR}/ocaml/site-lib"
+ldconf="ignore"
 EOF
 }
 addtask do_local_findlib_conf before do_configure after do_patch
