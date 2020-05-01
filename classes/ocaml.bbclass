@@ -14,6 +14,22 @@ OCAML_TOPLEVEL_PATH_class-cross = "${STAGING_LIBDIR_NATIVE}"
 OCAML_TOPLEVEL_PATH = "${STAGING_LIBDIR_NATIVE}/${TARGET_SYS}"
 export OCAML_TOPLEVEL_PATH
 
+# OCAML toolchain
+# Common variables used in Makfiles for OCAML projects.
+OCAMLMKLIB="ocamlmklib -ldopt '--sysroot=${STAGING_DIR_NATIVE}'"
+OCAMLC_class-target="ocamlc -cc '${CC} -fPIC'"
+OCAMLOPT_class-target="ocamlopt -cc '${CC} -fPIC'"
+OCAMLMKLIB_class-target="ocamlmklib -ldopt '--sysroot=${STAGING_DIR_TARGET} ${LDFLAGS}'"
+
+# Override Makefile variables with oe_runmake.
+EXTRA_OEMAKE_append += " \
+    OCAMLMKLIB="${OCAMLMKLIB}" \
+"
+EXTRA_OEMAKE_append_class-target += " \
+    OCAMLC="${OCAMLC}" \
+    OCAMLOPT="${OCAMLOPT}" \
+"
+
 DEPENDS_append_class-native = " \
     ocaml-native \
 "
