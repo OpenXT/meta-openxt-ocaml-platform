@@ -42,7 +42,6 @@ do_configure_x86() {
                 -cc "${TARGET_PREFIX}gcc -fPIC -m32 --sysroot=${STAGING_DIR_TARGET}" \
                 -as "${TARGET_PREFIX}as --32" \
                 -aspp "${TARGET_PREFIX}gcc -fPIC -m32 -c" \
-                -libs "-Wl,--sysroot=${STAGING_DIR_TARGET}" \
                 -host ${TARGET_SYS} \
                 -partialld "ld -r -melf_i386" \
                 ${EXTRA_CONF}
@@ -61,7 +60,6 @@ do_configure_x86-64() {
                 -cc "${TARGET_PREFIX}gcc -fPIC --sysroot=${STAGING_DIR_TARGET}" \
                 -as "${TARGET_PREFIX}as" \
                 -aspp "${TARGET_PREFIX}gcc -c -fPIC" \
-                -libs "-Wl,--sysroot=${STAGING_DIR_TARGET}" \
                 -host ${TARGET_SYS} \
                 -partialld "${TARGET_PREFIX}ld -r" \
                 ${EXTRA_CONF}
