@@ -32,7 +32,6 @@ COMPATIBLE_MACHINE_x86-64 = "(.*)"
 do_configure_x86() {
     ./configure -no-curses \
                 -no-graph \
-                -no-shared-libs \
                 -no-debugger \
                 -no-ocamldoc \
                 -prefix ${prefix} \
@@ -52,7 +51,6 @@ do_configure_x86() {
 do_configure_x86-64() {
     ./configure -no-curses \
                 -no-graph \
-                -no-shared-libs \
                 -no-debugger \
                 -no-ocamldoc \
                 -prefix ${prefix} \
