@@ -28,14 +28,6 @@ S = "${WORKDIR}/ocaml_dbus-${PV}"
 
 inherit ocaml findlib pkgconfig
 
-do_compile() {
-# TODO: There has to be a better way than this...
-# ocamlmklib should be able to figure out where the sysroot staging, apparently
-# OCAMLLIB does not cut it, neither does OCAML_TOPLEVEL_PATH, and get the
-# LDFLAGS.
-    oe_runmake OCAMLMKLIB="ocamlmklib -ldopt '--sysroot=${STAGING_DIR_TARGET} ${LDFLAGS}'"
-}
-
 do_install() {
     oe_runmake OCAMLDESTDIR="$(ocamlfind printconf destdir)" install
 }
