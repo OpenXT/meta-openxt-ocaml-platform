@@ -23,8 +23,8 @@ do_configure() {
 }
 do_configure_append() {
     # Make sure to turn off GCC stack-protector.
-    sed -i'' -re 's/NATIVECCCOMPOPTS=(.*)/NATIVECCCOMPOPTS=\1 -fno-stack-protector/' config/Makefile
-    sed -i'' -re 's/BYTECCCOMPOPTS=(.*)/BYTECCCOMPOPTS=\1 -fno-stack-protector/' config/Makefile
+    sed -i'' -re 's/NATIVECCCOMPOPTS=(.*)/NATIVECCCOMPOPTS=\1 -fno-stack-protector -fcommon/' config/Makefile
+    sed -i'' -re 's/BYTECCCOMPOPTS=(.*)/BYTECCCOMPOPTS=\1 -fno-stack-protector -fcommon/' config/Makefile
 }
 
 do_compile() {
