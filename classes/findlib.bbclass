@@ -13,24 +13,21 @@ export sitelibdir
 OCAMLFIND_CONF = "${STAGING_DIR_NATIVE}/etc/findlib.conf"
 export OCAMLFIND_CONF
 
-FILES_${PN} = " \
+FILES_${PN} += " \
     ${sitelibdir}/*/*${SOLIBSDEV} \
-    ${bindir}/* \
-    ${sbindir}/* \
 "
-FILES_${PN}-dev = " \
+FILES_${PN}-dev += " \
     ${sitelibdir}/*/*.cm* \
     ${sitelibdir}/*/*.mli \
     ${sitelibdir}/*/META \
 "
-FILES_${PN}-staticdev = " \
+FILES_${PN}-staticdev += " \
     ${sitelibdir}/*/*.a \
 "
-FILES_${PN}-dbg = " \
+FILES_${PN}-dbg += " \
     ${sitelibdir}/*/.debug \
     ${bindir}/.debug \
     ${sbindir}/.debug \
-    /usr/src/debug \
 "
 
 do_amend_findlib_conf() {
